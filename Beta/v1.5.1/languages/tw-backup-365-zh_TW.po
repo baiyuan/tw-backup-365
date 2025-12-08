@@ -1,0 +1,157 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: tw_backup_365 1.5.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-12-08 16:30+0800\n"
+"PO-Revision-Date: 2025-12-08 21:00+0800\n"
+"Last-Translator: \n"
+"Language-Team: Chinese (Traditional, Taiwan)\n"
+"Language: zh_TW\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.8\n"
+
+#: tw-backup-365.php:40 tw-backup-365.php:41
+msgid "Backup 365"
+msgstr "備份 365"
+
+#: tw-backup-365.php:64
+msgid "TW Backup 365 - v1.5.1"
+msgstr "TW 備份 365 - v1.5.1"
+
+#: tw-backup-365.php:69
+msgid "System Health Status"
+msgstr "系統健康度狀態"
+
+#: tw-backup-365.php:72
+msgid "Disk Free Space:"
+msgstr "硬碟剩餘空間："
+
+#: tw-backup-365.php:76
+#, php-format
+msgid "Total: %s"
+msgstr "總容量：%s"
+
+#: tw-backup-365.php:79
+msgid "Server Load:"
+msgstr "伺服器負載："
+
+#: tw-backup-365.php:81
+msgid "N/A"
+msgstr "無法取得"
+
+#: tw-backup-365.php:83
+msgid "Safe limit: < 5.0"
+msgstr "安全範圍：< 5.0"
+
+#: tw-backup-365.php:86
+msgid "Memory Limit:"
+msgstr "記憶體上限："
+
+#: tw-backup-365.php:89
+msgid "PHP Config"
+msgstr "PHP 設定"
+
+#: tw-backup-365.php:95
+msgid "One-Click Secure Backup"
+msgstr "一鍵安全備份"
+
+#: tw-backup-365.php:96
+msgid "Backups are split into 20MB parts. Pre-flight checks ensure system stability."
+msgstr "備份將自動切割為 20MB 分片。內建系統預檢機制以確保主機穩定性。"
+
+#: tw-backup-365.php:99
+msgid "Security Note:"
+msgstr "安全提示："
+
+#: tw-backup-365.php:100
+msgid "If using Nginx, disable directory listing. Randomized filenames are active."
+msgstr "若使用 Nginx，請關閉目錄列表功能。亂數檔名防護已啟用。"
+
+#: tw-backup-365.php:104
+#, php-format
+msgid "Storage Path: %s"
+msgstr "存放路徑：%s"
+
+#: tw-backup-365.php:105
+msgid "Copy Path"
+msgstr "複製路徑"
+
+#: tw-backup-365.php:115
+#, php-format
+msgid "Wait %d min"
+msgstr "請等待 %d 分鐘"
+
+#: tw-backup-365.php:117
+msgid "Start Secure Backup"
+msgstr "開始安全備份"
+
+#: tw-backup-365.php:125
+msgid "Backup History"
+msgstr "備份紀錄"
+
+#: tw-backup-365.php:129
+msgid "No backups found."
+msgstr "目前沒有備份紀錄。"
+
+#: tw-backup-365.php:134
+msgid "Date"
+msgstr "備份時間"
+
+#: tw-backup-365.php:135
+msgid "Backup ID (Hash)"
+msgstr "識別碼 (ID)"
+
+#: tw-backup-365.php:136
+msgid "Total Size"
+msgstr "總大小"
+
+#: tw-backup-365.php:137
+msgid "Actions"
+msgstr "操作"
+
+#: tw-backup-365.php:146
+#, php-format
+msgid "%d parts found"
+msgstr "共 %d 個分片"
+
+#: tw-backup-365.php:153
+msgid "View Files"
+msgstr "查看檔案"
+
+#: tw-backup-365.php:160
+msgid "File List (Download via FTP):"
+msgstr "檔案清單 (請透過 FTP 下載)："
+
+#: tw-backup-365.php:175
+msgid "How to Restore:"
+msgstr "如何還原："
+
+#: tw-backup-365.php:176
+msgid "Download all parts (.001, .002...) via FTP. Extract the first file (.001) to auto-merge."
+msgstr "請透過 FTP 下載所有分片。解壓縮第一個檔案 (.001) 即可自動合併還原。"
+
+#: tw-backup-365.php:218
+msgid "Backup failed."
+msgstr "備份失敗。"
+
+#: tw-backup-365.php:221
+msgid "Backup completed successfully!"
+msgstr "備份成功完成！"
+
+#: tw-backup-365.php:223
+msgid "Please wait before next backup."
+msgstr "備份過於頻繁，請稍後再試。"
+
+#: tw-backup-365.php:225
+msgid "Error: Insufficient disk space for backup."
+msgstr "錯誤：硬碟剩餘空間不足，無法執行備份。"
+
+#: tw-backup-365.php:227
+msgid "Error: Server load is too high. Try again later."
+msgstr "錯誤：伺服器負載過高，請稍後再試。"
+
+#. Description of the plugin/theme
+msgid "Secure Full Site Backup with System Pre-flight Checks (Disk/CPU/RAM)."
+msgstr "具備系統健康度預檢 (硬碟/CPU/記憶體) 的安全全站備份外掛。"
