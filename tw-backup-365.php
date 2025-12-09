@@ -2,8 +2,8 @@
 /**
  * Plugin Name:       tw_backup_365
  * Plugin URI:        https://example.com/tw-backup-365
- * Description:       Secure Full Site Backup with Smart Grouping & Performance Hotfix.
- * Version:           1.4.1 (Performance Hotfix)
+ * Description:       Secure Full Site Backup with System Pre-flight Checks (Disk/CPU/RAM).
+ * Version:           1.5.1 (Timezone Fix)
  * Author:            Your Name
  * Text Domain:       tw-backup-365
  * Domain Path:       /languages
@@ -53,14 +53,47 @@ class Tw_Backup_365 {
 		$this->check_secure_dir();
 		$grouped_backups = $this->get_grouped_backups();
 		$is_cooldown = get_transient( 'tw_backup_cooldown' );
+		
+		// 系統狀態
+		$disk_free = disk_free_space( $this->backup_dir );
+		$disk_total = disk_total_space( $this->backup_dir );
+		$cpu_load = $this->get_server_load();
+		$memory_limit = ini_get( 'memory_limit' );
 		?>
 		<div class="wrap">
-			<h1 class="wp-heading-inline"><?php esc_html_e( 'TW Backup 365 - v1.4.1', 'tw-backup-365' ); ?></h1>
+			<h1 class="wp-heading-inline"><?php esc_html_e( 'TW Backup 365 - v1.5.1', 'tw-backup-365' ); ?></h1>
 			<hr class="wp-header-end">
+
+			<div class="card" style="max-width: 800px; margin-top: 20px; border-left: 4px solid #2271b1;">
+				<h2><?php esc_html_e( 'System Health Status', 'tw-backup-365' ); ?></h2>
+				<div style="display: flex; gap: 20px; flex-wrap: wrap;">
+					<div style="flex: 1; min-width: 150px;">
+						<strong><?php esc_html_e( 'Disk Free Space:', 'tw-backup-365' ); ?></strong><br>
+						<span style="font-size: 1.2em; <?php echo ( $disk_free < 500 * 1024 * 1024 ) ? 'color: #d63638;' : 'color: #00a32a;'; ?>">
+							<?php echo size_format( $disk_free ); ?>
+						</span>
+						<p class="description"><?php printf( esc_html__( 'Total: %s', 'tw-backup-365' ), size_format( $disk_total ) ); ?></p>
+					</div>
+					<div style="flex: 1; min-width: 150px;">
+						<strong><?php esc_html_e( 'Server Load:', 'tw-backup-365' ); ?></strong><br>
+						<span style="font-size: 1.2em; <?php echo ( $cpu_load !== false && $cpu_load > 5.0 ) ? 'color: #d63638;' : 'color: #00a32a;'; ?>">
+							<?php echo ( $cpu_load === false ) ? __( 'N/A', 'tw-backup-365' ) : esc_html( $cpu_load ); ?>
+						</span>
+						<p class="description"><?php esc_html_e( 'Safe limit: < 5.0', 'tw-backup-365' ); ?></p>
+					</div>
+					<div style="flex: 1; min-width: 150px;">
+						<strong><?php esc_html_e( 'Memory Limit:', 'tw-backup-365' ); ?></strong><br>
+						<span style="font-size: 1.2em; color: #2271b1;">
+							<?php echo esc_html( $memory_limit ); ?>
+						</span>
+						<p class="description"><?php esc_html_e( 'PHP Config', 'tw-backup-365' ); ?></p>
+					</div>
+				</div>
+			</div>
 			
 			<div class="card" style="max-width: 800px; margin-top: 20px;">
 				<h2><?php esc_html_e( 'One-Click Secure Backup', 'tw-backup-365' ); ?></h2>
-				<p><?php esc_html_e( 'Backups are split into 20MB parts with randomized filenames for maximum security.', 'tw-backup-365' ); ?></p>
+				<p><?php esc_html_e( 'Backups are split into 20MB parts. Pre-flight checks ensure system stability.', 'tw-backup-365' ); ?></p>
 				
 				<div class="notice notice-warning inline" style="margin: 10px 0; padding: 10px;">
 					<p><strong><?php esc_html_e( 'Security Note:', 'tw-backup-365' ); ?></strong> 
@@ -111,7 +144,12 @@ class Tw_Backup_365 {
 							<?php foreach ( $grouped_backups as $hash => $group ) : ?>
 								<tr>
 									<td>
-										<strong><?php echo esc_html( date( 'Y-m-d H:i:s', strtotime( $group['date'] ) ) ); ?></strong>
+										<strong>
+										<?php 
+										// v1.5.1 核心修正：使用 wp_date() 轉換時區
+										echo esc_html( wp_date( 'Y-m-d H:i:s', strtotime( $group['date'] ) ) ); 
+										?>
+										</strong>
 									</td>
 									<td>
 										<code><?php echo esc_html( $hash ); ?></code>
@@ -169,7 +207,6 @@ class Tw_Backup_365 {
 			$basename = basename( $file );
 			if ( in_array( $basename, ['.htaccess', 'web.config', 'index.php', 'index.html'] ) ) continue;
 
-			// Name_YYYYMMDDHHMMSS_Hash.zip.part
 			if ( preg_match( '/^(.+)_(\d{14})_([a-zA-Z0-9]{12})\.zip(\.\d+)?$/', $basename, $matches ) ) {
 				$date = $matches[2];
 				$hash = $matches[3];
@@ -221,9 +258,21 @@ class Tw_Backup_365 {
 
 	private function render_status_notice() {
 		if ( isset( $_GET['status'] ) ) {
-			$class = ( $_GET['status'] === 'success' ) ? 'success' : 'error';
-			$msg = ( $_GET['status'] === 'success' ) ? __( 'Backup completed successfully!', 'tw-backup-365' ) : __( 'Backup failed.', 'tw-backup-365' );
-			if ( $_GET['status'] === 'ratelimit' ) $msg = __( 'Please wait before next backup.', 'tw-backup-365' );
+			$status = $_GET['status'];
+			$class = 'error';
+			$msg = __( 'Backup failed.', 'tw-backup-365' );
+
+			if ( $status === 'success' ) {
+				$class = 'success';
+				$msg = __( 'Backup completed successfully!', 'tw-backup-365' );
+			} elseif ( $status === 'ratelimit' ) {
+				$msg = __( 'Please wait before next backup.', 'tw-backup-365' );
+			} elseif ( $status === 'nospace' ) {
+				$msg = __( 'Error: Insufficient disk space for backup.', 'tw-backup-365' );
+			} elseif ( $status === 'highload' ) {
+				$msg = __( 'Error: Server load is too high. Try again later.', 'tw-backup-365' );
+			}
+
 			echo '<div class="notice notice-' . esc_attr( $class ) . ' is-dismissible"><p>' . esc_html( $msg ) . '</p></div>';
 		}
 	}
@@ -235,12 +284,44 @@ class Tw_Backup_365 {
 		if ( ! file_exists( $this->backup_dir . '/index.php' ) ) file_put_contents( $this->backup_dir . '/index.php', '<?php // Silence is golden.' );
 	}
 
+	private function get_server_load() {
+		if ( function_exists( 'sys_getloadavg' ) ) {
+			$load = sys_getloadavg();
+			return is_array( $load ) ? $load[0] : false;
+		}
+		return false;
+	}
+
+	private function get_directory_size( $path ) {
+		$size = 0;
+		$ignore = array( '.', '..', 'tw-backup-secure' );
+		$files = scandir( $path );
+		
+		foreach ( $files as $t ) {
+			if ( in_array( $t, $ignore ) ) continue;
+			if ( is_dir( rtrim( $path, '/' ) . '/' . $t ) ) {
+				$size += $this->get_directory_size( rtrim( $path, '/' ) . '/' . $t );
+			} else {
+				$size += filesize( rtrim( $path, '/' ) . '/' . $t );
+			}
+		}
+		return $size;
+	}
+
 	public function handle_backup_process() {
 		if ( ! isset( $_POST['tw_backup_nonce'] ) || ! wp_verify_nonce( $_POST['tw_backup_nonce'], 'tw_backup_action' ) || ! current_user_can( 'manage_options' ) ) wp_die( 'Security check failed.' );
 		if ( get_transient( 'tw_backup_cooldown' ) ) $this->redirect_status( 'ratelimit' );
 
 		set_time_limit( 0 );
 		ini_set( 'memory_limit', '512M' );
+
+		$load = $this->get_server_load();
+		if ( $load !== false && $load > 5.0 ) $this->redirect_status( 'highload' );
+
+		$site_size = $this->get_directory_size( ABSPATH );
+		$free_space = disk_free_space( $this->backup_dir );
+		if ( $free_space < ( $site_size * 1.2 ) ) $this->redirect_status( 'nospace' );
+		
 		set_transient( 'tw_backup_cooldown', time() + $this->cooldown_time, $this->cooldown_time );
 
 		try { $random_hash = bin2hex( random_bytes( 6 ) ); } catch ( Exception $e ) { $random_hash = wp_generate_password( 12, false ); }
@@ -289,18 +370,12 @@ class Tw_Backup_365 {
 		return true;
 	}
 
-	/**
-	 * Hotfix v1.4.1: 效能優化版
-	 * 移除循環開關邏輯，改用單次 close，提升 ZipArchive::addFile 效率
-	 */
 	private function zip_website_optimized( $zip_destination, $sql_path, $sql_filename_in_zip ) {
 		if ( ! class_exists( 'ZipArchive' ) ) return false;
 		
 		$zip = new ZipArchive();
-		// 確保建立新檔並覆蓋舊檔
 		if ( $zip->open( $zip_destination, ZipArchive::CREATE | ZipArchive::OVERWRITE ) !== true ) return false;
 		
-		// 加入資料庫
 		$zip->addFile( $sql_path, $sql_filename_in_zip );
 		
 		$root_path = realpath( ABSPATH );
@@ -309,14 +384,11 @@ class Tw_Backup_365 {
 		foreach ( $files as $name => $file ) {
 			if ( strpos( $file->getRealPath(), 'tw-backup-secure' ) !== false ) continue;
 			if ( $file->getExtension() === 'zip' || $file->getExtension() === 'gz' ) continue;
-			
 			if ( ! $file->isDir() ) {
-				// 這裡不再進行 close/open 循環，因為 addFile 只會加入參照，記憶體消耗極低
 				$zip->addFile( $file->getRealPath(), substr( $file->getRealPath(), strlen( $root_path ) + 1 ) );
 			}
 		}
 		
-		// 最後一次性寫入磁碟，效率最高
 		$zip->close();
 		return true;
 	}
