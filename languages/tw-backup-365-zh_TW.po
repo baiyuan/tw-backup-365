@@ -1,0 +1,135 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: tw_backup_365 1.4.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-12-08 11:00+0800\n"
+"PO-Revision-Date: 2025-12-08 11:16+0800\n"
+"Last-Translator: \n"
+"Language-Team: Chinese (Traditional, Taiwan)\n"
+"Language: zh_TW\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.8\n"
+
+# ==========================================================
+# 核心 UI 介面 (Dashboard)
+# ==========================================================
+#: tw-backup-365.php:40 tw-backup-365.php:41
+msgid "Backup 365"
+msgstr "備份 365"
+
+#: tw-backup-365.php:62
+msgid "TW Backup 365 - v1.4.0"
+msgstr "TW 備份 365 - v1.4.0 旗艦版"
+
+#: tw-backup-365.php:67
+msgid "One-Click Secure Backup"
+msgstr "一鍵安全備份"
+
+#: tw-backup-365.php:68
+msgid "Backups are split into 20MB parts with randomized filenames for maximum security."
+msgstr "備份將自動切割為 20MB 的分片，且檔名已加入亂數防護，確保最高安全性。"
+
+#: tw-backup-365.php:71
+msgid "Security Note:"
+msgstr "安全提示："
+
+#: tw-backup-365.php:72
+msgid "If using Nginx, disable directory listing. Randomized filenames are active."
+msgstr "若使用 Nginx，請關閉目錄列表功能。亂數檔名防護已啟用。"
+
+#: tw-backup-365.php:76
+#, php-format
+msgid "Storage Path: %s"
+msgstr "存放路徑：%s"
+
+#: tw-backup-365.php:77
+msgid "Copy Path"
+msgstr "複製路徑"
+
+#: tw-backup-365.php:87
+#, php-format
+msgid "Wait %d min"
+msgstr "請等待 %d 分鐘"
+
+#: tw-backup-365.php:89
+msgid "Start Secure Backup"
+msgstr "開始安全備份"
+
+#: tw-backup-365.php:97
+msgid "Backup History"
+msgstr "備份紀錄"
+
+#: tw-backup-365.php:101
+msgid "No backups found."
+msgstr "目前沒有備份紀錄。"
+
+# ==========================================================
+# 表格相關 (Table)
+# ==========================================================
+#: tw-backup-365.php:106
+msgid "Date"
+msgstr "備份時間"
+
+#: tw-backup-365.php:107
+msgid "Backup ID (Hash)"
+msgstr "識別碼 (ID)"
+
+#: tw-backup-365.php:108
+msgid "Total Size"
+msgstr "總大小"
+
+#: tw-backup-365.php:109
+msgid "Actions"
+msgstr "操作"
+
+#: tw-backup-365.php:118
+#, php-format
+msgid "%d parts found"
+msgstr "共 %d 個分片"
+
+#: tw-backup-365.php:125
+msgid "View Files"
+msgstr "查看檔案"
+
+#: tw-backup-365.php:132
+msgid "File List (Download via FTP):"
+msgstr "檔案清單 (請透過 FTP 下載)："
+
+# ==========================================================
+# 訊息與提示 (Messages & Notices)
+# ==========================================================
+#: tw-backup-365.php:147
+msgid "How to Restore:"
+msgstr "如何還原："
+
+#: tw-backup-365.php:148
+msgid "Download all parts (.001, .002...) via FTP. Extract the first file (.001) to auto-merge."
+msgstr "請透過 FTP 下載所有分片。解壓縮第一個檔案 (.001) 即可自動合併還原。"
+
+#: tw-backup-365.php:158
+msgid "Backup completed successfully!"
+msgstr "備份成功完成！"
+
+#: tw-backup-365.php:158
+msgid "Backup failed."
+msgstr "備份失敗。"
+
+#: tw-backup-365.php:159
+msgid "Please wait before next backup."
+msgstr "備份過於頻繁，請稍後再試。"
+
+# ==========================================================
+# 外掛描述與系統錯誤 (Plugin Description & System Errors)
+# ==========================================================
+#. Plugin Name of the plugin/theme
+msgid "tw_backup_365"
+msgstr "TW 備份 365"
+
+#. Description of the plugin/theme
+msgid "Secure Full Site Backup with Smart Grouping UI & UX Improvements."
+msgstr "具備智慧分組介面與 UX 優化的安全全站備份外掛。"
+
+msgid "Security check failed."
+msgstr "安全性檢查失敗。"

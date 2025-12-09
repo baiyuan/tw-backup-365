@@ -1,0 +1,67 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: tw_backup_365 1.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-10-27 12:00+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco Automatic\n"
+
+#: tw-backup-365.php:40 tw-backup-365.php:41
+msgid "Backup 365"
+msgstr ""
+
+#: tw-backup-365.php:57
+msgid "TW Backup 365 - Secure & Split"
+msgstr ""
+
+#: tw-backup-365.php:60
+msgid "One-Click Backup"
+msgstr ""
+
+#: tw-backup-365.php:61
+msgid "Backups are now saved in a secure folder and split into 20MB parts to ensure server stability."
+msgstr ""
+
+#: tw-backup-365.php:63
+#, php-format
+msgid "Location: %s"
+msgstr ""
+
+#: tw-backup-365.php:69
+msgid "Start Secure Backup"
+msgstr ""
+
+#: tw-backup-365.php:74
+msgid "Backup History"
+msgstr ""
+
+#: tw-backup-365.php:76
+msgid "No backups found."
+msgstr ""
+
+#: tw-backup-365.php:87
+msgid "Please use FTP/SFTP to download these files for maximum security."
+msgstr ""
+
+#: tw-backup-365.php:97
+msgid "Backup completed and split successfully!"
+msgstr ""
+
+#: tw-backup-365.php:99
+msgid "Backup failed."
+msgstr ""
+
+#: tw-backup-365.php:134
+msgid "Security check failed."
+msgstr ""
+
+#: tw-backup-365.php:137
+msgid "Permission denied."
+msgstr ""
