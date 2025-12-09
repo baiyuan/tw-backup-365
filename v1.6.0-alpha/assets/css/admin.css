@@ -1,0 +1,42 @@
+/* Dashboard Layout */
+.tw-dashboard-top-row {
+	display: flex;
+	gap: 20px;
+	flex-wrap: wrap;
+	margin-top: 20px;
+}
+.tw-card-half {
+	flex: 1;
+	min-width: 350px;
+	margin-top: 0 !important;
+	max-width: none !important;
+}
+.tw-health-grid {
+	display: flex;
+	gap: 15px;
+	flex-wrap: wrap;
+}
+.tw-health-item {
+	flex: 1;
+	min-width: 120px;
+}
+.tw-stat-value {
+	font-size: 1.4em;
+	font-weight: 500;
+	line-height: 1.5;
+}
+.backup-details-row td {
+	box-shadow: inset 0 3px 5px rgba(0,0,0,0.05);
+}
+.wp-list-table th {
+	font-weight: 600;
+}
+
+@media (max-width: 782px) {
+	.tw-dashboard-top-row {
+		flex-direction: column;
+	}
+	.tw-card-half {
+		min-width: 100%;
+	}
+}

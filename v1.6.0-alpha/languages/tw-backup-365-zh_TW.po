@@ -1,0 +1,161 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: tw_backup_365 1.6.0-alpha\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-12-09 13:00+0800\n"
+"PO-Revision-Date: 2025-12-09 20:09+0800\n"
+"Last-Translator: \n"
+"Language-Team: Chinese (Traditional, Taiwan)\n"
+"Language: zh_TW\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.8\n"
+
+#: tw-backup-365.php:40 tw-backup-365.php:41
+msgid "Backup 365"
+msgstr "備份 365"
+
+#: tw-backup-365.php:64
+msgid "TW Backup 365 - v1.6.0-alpha"
+msgstr "TW 備份 365 - v1.6.0-alpha"
+
+#: templates/dashboard.php:9
+msgid "System Health Status"
+msgstr "系統健康度狀態"
+
+#: templates/dashboard.php:12
+msgid "Disk Free Space:"
+msgstr "硬碟剩餘空間："
+
+#: templates/dashboard.php:16
+#, php-format
+msgid "Total: %s"
+msgstr "總容量：%s"
+
+#: templates/dashboard.php:19
+msgid "Server Load:"
+msgstr "伺服器負載："
+
+#: templates/dashboard.php:21
+msgid "N/A"
+msgstr "無法取得"
+
+#: templates/dashboard.php:23
+msgid "Safe limit: < 5.0"
+msgstr "安全範圍：< 5.0"
+
+#: templates/dashboard.php:26
+msgid "Memory Limit:"
+msgstr "記憶體上限："
+
+#: templates/dashboard.php:29
+msgid "PHP Config"
+msgstr "PHP 設定"
+
+#: templates/dashboard.php:35
+msgid "One-Click Secure Backup"
+msgstr "一鍵安全備份"
+
+#: templates/dashboard.php:36
+msgid "Backups are split into 20MB parts. Pre-flight checks ensure system stability."
+msgstr "備份將自動切割為 20MB 分片。內建系統預檢機制以確保主機穩定性。"
+
+#: templates/dashboard.php:39
+msgid "Security Note:"
+msgstr "安全提示："
+
+#: templates/dashboard.php:40
+msgid "If using Nginx, disable directory listing. Randomized filenames are active."
+msgstr "若使用 Nginx，請關閉目錄列表功能。亂數檔名防護已啟用。"
+
+#: templates/dashboard.php:44
+#, php-format
+msgid "Storage Path: %s"
+msgstr "存放路徑：%s"
+
+#: templates/dashboard.php:45
+msgid "Copy Path"
+msgstr "複製路徑"
+
+#: templates/dashboard.php:55
+#, php-format
+msgid "Please wait %s"
+msgstr "請等待 %s"
+
+#: templates/dashboard.php:58
+msgid "Start Secure Backup"
+msgstr "開始安全備份"
+
+#: templates/dashboard.php:59
+msgid "Please wait"
+msgstr "請等待"
+
+#: templates/dashboard.php:67
+msgid "Backup History"
+msgstr "備份紀錄"
+
+#: templates/dashboard.php:71
+msgid "No backups found."
+msgstr "目前沒有備份紀錄。"
+
+#: templates/dashboard.php:76
+msgid "Date"
+msgstr "備份時間"
+
+#: templates/dashboard.php:77
+msgid "Backup ID (Hash)"
+msgstr "識別碼 (ID)"
+
+#: templates/dashboard.php:78
+msgid "Total Size"
+msgstr "總大小"
+
+#: templates/dashboard.php:79
+msgid "Actions"
+msgstr "操作"
+
+#: templates/dashboard.php:88
+#, php-format
+msgid "%d parts found"
+msgstr "共 %d 個分片"
+
+#: templates/dashboard.php:95
+msgid "View Files"
+msgstr "查看檔案"
+
+#: templates/dashboard.php:102
+msgid "File List (Download via FTP):"
+msgstr "檔案清單 (請透過 FTP 下載)："
+
+#: templates/dashboard.php:117
+msgid "How to Restore:"
+msgstr "如何還原："
+
+#: templates/dashboard.php:118
+msgid "Download all parts (.001, .002...) via FTP. Extract the first file (.001) to auto-merge."
+msgstr "請透過 FTP 下載所有分片。解壓縮第一個檔案 (.001) 即可自動合併還原。"
+
+#: includes/class-admin-page.php:100
+msgid "Backup failed."
+msgstr "備份失敗。"
+
+#: includes/class-admin-page.php:101
+msgid "Backup completed successfully!"
+msgstr "備份成功完成！"
+
+#: includes/class-admin-page.php:102
+msgid "Please wait before next backup."
+msgstr "備份過於頻繁，請稍後再試。"
+
+#: includes/class-admin-page.php:103
+msgid "Error: Insufficient disk space for backup."
+msgstr "錯誤：硬碟剩餘空間不足，無法執行備份。"
+
+#: includes/class-admin-page.php:104
+msgid "Error: Server load is too high. Try again later."
+msgstr "錯誤：伺服器負載過高，請稍後再試。"
+
+#. Description of the plugin/theme
+msgid "Secure Full Site Backup with MVC Architecture (v1.6.0-alpha)."
+msgstr "採用 MVC 架構的安全全站備份外掛 (v1.6.0-alpha)。"
