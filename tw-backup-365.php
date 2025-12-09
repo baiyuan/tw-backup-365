@@ -2,8 +2,8 @@
 /**
  * Plugin Name:       tw_backup_365
  * Plugin URI:        https://example.com/tw-backup-365
- * Description:       Secure Full Site Backup with System Pre-flight Checks & Dashboard Layout.
- * Version:           1.5.3 (Dashboard Layout)
+ * Description:       Secure Full Site Backup with System Pre-flight Checks & Security Hotfix.
+ * Version:           1.5.4 (Security Hotfix)
  * Author:            Your Name
  * Text Domain:       tw-backup-365
  * Domain Path:       /languages
@@ -61,7 +61,7 @@ class Tw_Backup_365 {
 		$memory_limit = ini_get( 'memory_limit' );
 		?>
 		<div class="wrap">
-			<h1 class="wp-heading-inline"><?php esc_html_e( 'TW Backup 365 - v1.5.3', 'tw-backup-365' ); ?></h1>
+			<h1 class="wp-heading-inline"><?php esc_html_e( 'TW Backup 365 - v1.5.4', 'tw-backup-365' ); ?></h1>
 			<hr class="wp-header-end">
 
 			<div class="tw-dashboard-top-row">
@@ -285,18 +285,18 @@ class Tw_Backup_365 {
 		});
 		</script>
 		<style>
-			/* v1.5.3 Dashboard Layout Styles */
+			/* Dashboard Layout Styles */
 			.tw-dashboard-top-row {
 				display: flex;
 				gap: 20px;
-				flex-wrap: wrap; /* 允許換行以適應手機 */
+				flex-wrap: wrap;
 				margin-top: 20px;
 			}
 			.tw-card-half {
-				flex: 1; /* 兩個卡片均分寬度 */
-				min-width: 350px; /* 最小寬度，過窄時換行 */
-				margin-top: 0 !important; /* 覆蓋 WP 預設樣式 */
-				max-width: none !important; /* 移除寬度限制 */
+				flex: 1;
+				min-width: 350px;
+				margin-top: 0 !important;
+				max-width: none !important;
 			}
 			.tw-health-grid {
 				display: flex;
@@ -421,21 +421,34 @@ class Tw_Backup_365 {
 		exit;
 	}
 
+	/**
+	 * Security Fix v1.5.4: 改用 wpdb::prepare 防止 SQL Injection
+	 */
 	private function dump_database( $output_file ) {
 		global $wpdb;
 		$tables = $wpdb->get_results( 'SHOW TABLES', ARRAY_N );
 		$handle = fopen( $output_file, 'w' );
 		if ( ! $handle ) return false;
-		fwrite( $handle, "-- WordPress Database Backup\n\n" );
+
+		fwrite( $handle, "-- WordPress Database Backup\n" );
+		fwrite( $handle, "-- Secured by wpdb::prepare\n\n" );
+
 		foreach ( $tables as $table ) {
 			$table_name = $table[0];
 			$create_table = $wpdb->get_row( "SHOW CREATE TABLE `$table_name`", ARRAY_N );
 			fwrite( $handle, "\n" . $create_table[1] . ";\n\n" );
+			
 			$rows = $wpdb->get_results( "SELECT * FROM `$table_name`", ARRAY_A );
 			if ( $rows ) {
 				foreach ( $rows as $row ) {
-					$row = array_map( array( $wpdb, '_real_escape' ), $row );
-					fwrite( $handle, "INSERT INTO `$table_name` VALUES ('" . implode( "', '", $row ) . "');\n" );
+					// 核心修正：移除手動拼接，改用 prepare 與佔位符
+					$placeholders = array_fill( 0, count( $row ), '%s' );
+					$format = implode( ', ', $placeholders );
+					
+					$query = "INSERT INTO `$table_name` VALUES ($format)";
+					$sql = $wpdb->prepare( $query, $row );
+					
+					fwrite( $handle, $sql . ";\n" );
 				}
 			}
 		}

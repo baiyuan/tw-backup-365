@@ -1,24 +1,24 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: tw_backup_365 1.5.3\n"
+"Project-Id-Version: tw_backup_365 1.5.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-09 12:00+0800\n"
-"PO-Revision-Date: 2025-12-09 19:32+0800\n"
+"POT-Creation-Date: 2025-12-09 13:30+0800\n"
+"PO-Revision-Date: 2025-12-09 13:35+0800\n"
 "Last-Translator: \n"
 "Language-Team: Chinese (Traditional, Taiwan)\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.0\n"
 
 #: tw-backup-365.php:40 tw-backup-365.php:41
 msgid "Backup 365"
 msgstr "備份 365"
 
 #: tw-backup-365.php:64
-msgid "TW Backup 365 - v1.5.3"
-msgstr "TW 備份 365 - v1.5.3"
+msgid "TW Backup 365 - v1.5.4"
+msgstr "TW 備份 365 - v1.5.4 (資安修復版)"
 
 #: tw-backup-365.php:72
 msgid "System Health Status"
@@ -157,5 +157,5 @@ msgid "Error: Server load is too high. Try again later."
 msgstr "錯誤：伺服器負載過高，請稍後再試。"
 
 #. Description of the plugin/theme
-msgid "Secure Full Site Backup with System Pre-flight Checks & Dashboard Layout."
-msgstr "具備系統健康度預檢與儀表板佈局的安全全站備份外掛。"
+msgid "Secure Full Site Backup with System Pre-flight Checks & Security Hotfix."
+msgstr "具備系統健康度預檢與 SQL 注入防護的安全全站備份外掛。"
