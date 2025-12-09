@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: tw_backup_365 1.5.1\n"
+"Project-Id-Version: tw_backup_365 1.5.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-08 16:30+0800\n"
-"PO-Revision-Date: 2025-12-08 21:00+0800\n"
+"POT-Creation-Date: 2025-12-09 10:00+0800\n"
+"PO-Revision-Date: 2025-12-09 15:34+0800\n"
 "Last-Translator: \n"
 "Language-Team: Chinese (Traditional, Taiwan)\n"
 "Language: zh_TW\n"
@@ -17,8 +17,8 @@ msgid "Backup 365"
 msgstr "備份 365"
 
 #: tw-backup-365.php:64
-msgid "TW Backup 365 - v1.5.1"
-msgstr "TW 備份 365 - v1.5.1"
+msgid "TW Backup 365 - v1.5.2"
+msgstr "TW 備份 365 - v1.5.2 (Auto-Unlock)"
 
 #: tw-backup-365.php:69
 msgid "System Health Status"
@@ -80,8 +80,12 @@ msgstr "複製路徑"
 
 #: tw-backup-365.php:115
 #, php-format
-msgid "Wait %d min"
-msgstr "請等待 %d 分鐘"
+msgid "Please wait %s"
+msgstr "請等待 %s"
+
+#: tw-backup-365.php:118
+msgid "Please wait"
+msgstr "請等待"
 
 #: tw-backup-365.php:117
 msgid "Start Secure Backup"
@@ -153,5 +157,5 @@ msgid "Error: Server load is too high. Try again later."
 msgstr "錯誤：伺服器負載過高，請稍後再試。"
 
 #. Description of the plugin/theme
-msgid "Secure Full Site Backup with System Pre-flight Checks (Disk/CPU/RAM)."
-msgstr "具備系統健康度預檢 (硬碟/CPU/記憶體) 的安全全站備份外掛。"
+msgid "Secure Full Site Backup with System Pre-flight Checks & Live Cooldown UI."
+msgstr "具備系統健康度預檢與即時冷卻介面的安全全站備份外掛。"
