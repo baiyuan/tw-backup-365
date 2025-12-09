@@ -2,8 +2,8 @@
 /**
  * Plugin Name:       tw_backup_365
  * Plugin URI:        https://example.com/tw-backup-365
- * Description:       Secure Full Site Backup with System Pre-flight Checks & Live Cooldown UI.
- * Version:           1.5.2 (Auto-Unlock)
+ * Description:       Secure Full Site Backup with System Pre-flight Checks & Dashboard Layout.
+ * Version:           1.5.3 (Dashboard Layout)
  * Author:            Your Name
  * Text Domain:       tw-backup-365
  * Domain Path:       /languages
@@ -61,76 +61,79 @@ class Tw_Backup_365 {
 		$memory_limit = ini_get( 'memory_limit' );
 		?>
 		<div class="wrap">
-			<h1 class="wp-heading-inline"><?php esc_html_e( 'TW Backup 365 - v1.5.2', 'tw-backup-365' ); ?></h1>
+			<h1 class="wp-heading-inline"><?php esc_html_e( 'TW Backup 365 - v1.5.3', 'tw-backup-365' ); ?></h1>
 			<hr class="wp-header-end">
 
-			<div class="card" style="max-width: 800px; margin-top: 20px; border-left: 4px solid #2271b1;">
-				<h2><?php esc_html_e( 'System Health Status', 'tw-backup-365' ); ?></h2>
-				<div style="display: flex; gap: 20px; flex-wrap: wrap;">
-					<div style="flex: 1; min-width: 150px;">
-						<strong><?php esc_html_e( 'Disk Free Space:', 'tw-backup-365' ); ?></strong><br>
-						<span style="font-size: 1.2em; <?php echo ( $disk_free < 500 * 1024 * 1024 ) ? 'color: #d63638;' : 'color: #00a32a;'; ?>">
-							<?php echo size_format( $disk_free ); ?>
-						</span>
-						<p class="description"><?php printf( esc_html__( 'Total: %s', 'tw-backup-365' ), size_format( $disk_total ) ); ?></p>
-					</div>
-					<div style="flex: 1; min-width: 150px;">
-						<strong><?php esc_html_e( 'Server Load:', 'tw-backup-365' ); ?></strong><br>
-						<span style="font-size: 1.2em; <?php echo ( $cpu_load !== false && $cpu_load > 5.0 ) ? 'color: #d63638;' : 'color: #00a32a;'; ?>">
-							<?php echo ( $cpu_load === false ) ? __( 'N/A', 'tw-backup-365' ) : esc_html( $cpu_load ); ?>
-						</span>
-						<p class="description"><?php esc_html_e( 'Safe limit: < 5.0', 'tw-backup-365' ); ?></p>
-					</div>
-					<div style="flex: 1; min-width: 150px;">
-						<strong><?php esc_html_e( 'Memory Limit:', 'tw-backup-365' ); ?></strong><br>
-						<span style="font-size: 1.2em; color: #2271b1;">
-							<?php echo esc_html( $memory_limit ); ?>
-						</span>
-						<p class="description"><?php esc_html_e( 'PHP Config', 'tw-backup-365' ); ?></p>
+			<div class="tw-dashboard-top-row">
+				
+				<div class="card tw-card-half" style="border-left: 4px solid #2271b1;">
+					<h2><?php esc_html_e( 'System Health Status', 'tw-backup-365' ); ?></h2>
+					<div class="tw-health-grid">
+						<div class="tw-health-item">
+							<strong><?php esc_html_e( 'Disk Free Space:', 'tw-backup-365' ); ?></strong><br>
+							<span class="tw-stat-value" style="<?php echo ( $disk_free < 500 * 1024 * 1024 ) ? 'color: #d63638;' : 'color: #00a32a;'; ?>">
+								<?php echo size_format( $disk_free ); ?>
+							</span>
+							<p class="description"><?php printf( esc_html__( 'Total: %s', 'tw-backup-365' ), size_format( $disk_total ) ); ?></p>
+						</div>
+						<div class="tw-health-item">
+							<strong><?php esc_html_e( 'Server Load:', 'tw-backup-365' ); ?></strong><br>
+							<span class="tw-stat-value" style="<?php echo ( $cpu_load !== false && $cpu_load > 5.0 ) ? 'color: #d63638;' : 'color: #00a32a;'; ?>">
+								<?php echo ( $cpu_load === false ) ? __( 'N/A', 'tw-backup-365' ) : esc_html( $cpu_load ); ?>
+							</span>
+							<p class="description"><?php esc_html_e( 'Safe limit: < 5.0', 'tw-backup-365' ); ?></p>
+						</div>
+						<div class="tw-health-item">
+							<strong><?php esc_html_e( 'Memory Limit:', 'tw-backup-365' ); ?></strong><br>
+							<span class="tw-stat-value" style="color: #2271b1;">
+								<?php echo esc_html( $memory_limit ); ?>
+							</span>
+							<p class="description"><?php esc_html_e( 'PHP Config', 'tw-backup-365' ); ?></p>
+						</div>
 					</div>
 				</div>
-			</div>
-			
-			<div class="card" style="max-width: 800px; margin-top: 20px;">
-				<h2><?php esc_html_e( 'One-Click Secure Backup', 'tw-backup-365' ); ?></h2>
-				<p><?php esc_html_e( 'Backups are split into 20MB parts. Pre-flight checks ensure system stability.', 'tw-backup-365' ); ?></p>
 				
-				<div class="notice notice-warning inline" style="margin: 10px 0; padding: 10px;">
-					<p><strong><?php esc_html_e( 'Security Note:', 'tw-backup-365' ); ?></strong> 
-					<?php esc_html_e( 'If using Nginx, disable directory listing. Randomized filenames are active.', 'tw-backup-365' ); ?></p>
-				</div>
-
-				<p class="description">
-					<?php printf( esc_html__( 'Storage Path: %s', 'tw-backup-365' ), '<code id="storage-path">' . esc_html( $this->backup_dir ) . '</code>' ); ?>
-					<button type="button" class="button button-small copy-btn" data-clipboard-target="#storage-path">
-						<span class="dashicons dashicons-clipboard" style="margin-top:2px;"></span> <?php esc_html_e( 'Copy Path', 'tw-backup-365' ); ?>
-					</button>
-				</p>
-				
-				<form action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" method="post">
-					<?php wp_nonce_field( 'tw_backup_action', 'tw_backup_nonce' ); ?>
-					<input type="hidden" name="action" value="tw_backup_trigger">
+				<div class="card tw-card-half">
+					<h2><?php esc_html_e( 'One-Click Secure Backup', 'tw-backup-365' ); ?></h2>
+					<p><?php esc_html_e( 'Backups are split into 20MB parts. Pre-flight checks ensure system stability.', 'tw-backup-365' ); ?></p>
 					
-					<?php if ( $is_cooldown ) : 
-						$remaining = $is_cooldown - time();
-						if ( $remaining < 0 ) $remaining = 0;
-					?>
-						<input type="submit" 
-							   id="tw-cooldown-btn" 
-							   class="button button-secondary" 
-							   disabled 
-							   value="<?php echo esc_attr( sprintf( __( 'Please wait %s', 'tw-backup-365' ), gmdate( 'i:s', $remaining ) ) ); ?>"
-							   data-remaining="<?php echo esc_attr( $remaining ); ?>"
-							   data-ready-text="<?php esc_attr_e( 'Start Secure Backup', 'tw-backup-365' ); ?>"
-							   data-wait-text="<?php esc_attr_e( 'Please wait', 'tw-backup-365' ); ?>"
-						>
-					<?php else : ?>
-						<?php submit_button( __( 'Start Secure Backup', 'tw-backup-365' ), 'primary' ); ?>
-					<?php endif; ?>
-				</form>
+					<div class="notice notice-warning inline" style="margin: 10px 0; padding: 10px;">
+						<p><strong><?php esc_html_e( 'Security Note:', 'tw-backup-365' ); ?></strong> 
+						<?php esc_html_e( 'If using Nginx, disable directory listing. Randomized filenames are active.', 'tw-backup-365' ); ?></p>
+					</div>
+
+					<p class="description">
+						<?php printf( esc_html__( 'Storage Path: %s', 'tw-backup-365' ), '<code id="storage-path" style="display:inline-block; max-width:100%; overflow:hidden; text-overflow:ellipsis; vertical-align:bottom;">' . esc_html( $this->backup_dir ) . '</code>' ); ?>
+						<button type="button" class="button button-small copy-btn" data-clipboard-target="#storage-path">
+							<span class="dashicons dashicons-clipboard" style="margin-top:2px;"></span> <?php esc_html_e( 'Copy Path', 'tw-backup-365' ); ?>
+						</button>
+					</p>
+					
+					<form action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" method="post" style="margin-top: 15px;">
+						<?php wp_nonce_field( 'tw_backup_action', 'tw_backup_nonce' ); ?>
+						<input type="hidden" name="action" value="tw_backup_trigger">
+						
+						<?php if ( $is_cooldown ) : 
+							$remaining = $is_cooldown - time();
+							if ( $remaining < 0 ) $remaining = 0;
+						?>
+							<input type="submit" 
+								   id="tw-cooldown-btn" 
+								   class="button button-secondary" 
+								   disabled 
+								   value="<?php echo esc_attr( sprintf( __( 'Please wait %s', 'tw-backup-365' ), gmdate( 'i:s', $remaining ) ) ); ?>"
+								   data-remaining="<?php echo esc_attr( $remaining ); ?>"
+								   data-ready-text="<?php esc_attr_e( 'Start Secure Backup', 'tw-backup-365' ); ?>"
+								   data-wait-text="<?php esc_attr_e( 'Please wait', 'tw-backup-365' ); ?>"
+							>
+						<?php else : ?>
+							<?php submit_button( __( 'Start Secure Backup', 'tw-backup-365' ), 'primary' ); ?>
+						<?php endif; ?>
+					</form>
+				</div>
 			</div>
 
-			<div class="card" style="margin-top:20px; max-width: 800px; padding: 0;">
+			<div class="card" style="margin-top:20px; padding: 0; max-width: none;">
 				<div style="padding: 15px; border-bottom: 1px solid #eee;">
 					<h3 style="margin:0;"><?php esc_html_e( 'Backup History', 'tw-backup-365' ); ?></h3>
 				</div>
@@ -154,10 +157,7 @@ class Tw_Backup_365 {
 								<tr>
 									<td>
 										<strong>
-										<?php 
-										// v1.5.1 時區修正
-										echo esc_html( wp_date( 'Y-m-d H:i:s', strtotime( $group['date'] ) ) ); 
-										?>
+										<?php echo esc_html( wp_date( 'Y-m-d H:i:s', strtotime( $group['date'] ) ) ); ?>
 										</strong>
 									</td>
 									<td>
@@ -240,13 +240,13 @@ class Tw_Backup_365 {
 		?>
 		<script type="text/javascript">
 		jQuery(document).ready(function($) {
-			// 詳情展開
+			// Toggle Details
 			$('.toggle-details').on('click', function() {
 				var target = '#' + $(this).data('target');
 				$(target).toggle();
 			});
 
-			// 複製路徑
+			// Copy Path
 			$('.copy-btn').on('click', function() {
 				var $temp = $("<input>");
 				$("body").append($temp);
@@ -259,7 +259,7 @@ class Tw_Backup_365 {
 				setTimeout(function() { $btn.html(originalText); }, 2000);
 			});
 
-			// v1.5.2 核心更新：自動倒數與解鎖按鈕
+			// Cooldown Timer
 			var $cooldownBtn = $('#tw-cooldown-btn');
 			if ($cooldownBtn.length) {
 				var remaining = parseInt($cooldownBtn.data('remaining'));
@@ -268,16 +268,13 @@ class Tw_Backup_365 {
 
 				var interval = setInterval(function() {
 					remaining--;
-					
 					if (remaining <= 0) {
 						clearInterval(interval);
-						// 時間到：解鎖按鈕，變色，改文字
 						$cooldownBtn.prop('disabled', false)
 									.removeClass('button-secondary')
 									.addClass('button-primary')
 									.val(readyText);
 					} else {
-						// 倒數中：更新文字 MM:SS
 						var minutes = Math.floor(remaining / 60);
 						var seconds = remaining % 60;
 						var formatted = (minutes < 10 ? "0" : "") + minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
@@ -288,8 +285,45 @@ class Tw_Backup_365 {
 		});
 		</script>
 		<style>
+			/* v1.5.3 Dashboard Layout Styles */
+			.tw-dashboard-top-row {
+				display: flex;
+				gap: 20px;
+				flex-wrap: wrap; /* 允許換行以適應手機 */
+				margin-top: 20px;
+			}
+			.tw-card-half {
+				flex: 1; /* 兩個卡片均分寬度 */
+				min-width: 350px; /* 最小寬度，過窄時換行 */
+				margin-top: 0 !important; /* 覆蓋 WP 預設樣式 */
+				max-width: none !important; /* 移除寬度限制 */
+			}
+			.tw-health-grid {
+				display: flex;
+				gap: 15px;
+				flex-wrap: wrap;
+			}
+			.tw-health-item {
+				flex: 1;
+				min-width: 120px;
+			}
+			.tw-stat-value {
+				font-size: 1.4em;
+				font-weight: 500;
+				line-height: 1.5;
+			}
 			.backup-details-row td { box-shadow: inset 0 3px 5px rgba(0,0,0,0.05); }
 			.wp-list-table th { font-weight: 600; }
+			
+			/* Mobile Responsive Fix */
+			@media (max-width: 782px) {
+				.tw-dashboard-top-row {
+					flex-direction: column;
+				}
+				.tw-card-half {
+					min-width: 100%;
+				}
+			}
 		</style>
 		<?php
 		endif;
