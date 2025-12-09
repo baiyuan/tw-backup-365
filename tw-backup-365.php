@@ -2,8 +2,8 @@
 /**
  * Plugin Name:       tw_backup_365
  * Plugin URI:        https://example.com/tw-backup-365
- * Description:       Secure Full Site Backup with System Pre-flight Checks (Disk/CPU/RAM).
- * Version:           1.5.1 (Timezone Fix)
+ * Description:       Secure Full Site Backup with System Pre-flight Checks & Live Cooldown UI.
+ * Version:           1.5.2 (Auto-Unlock)
  * Author:            Your Name
  * Text Domain:       tw-backup-365
  * Domain Path:       /languages
@@ -61,7 +61,7 @@ class Tw_Backup_365 {
 		$memory_limit = ini_get( 'memory_limit' );
 		?>
 		<div class="wrap">
-			<h1 class="wp-heading-inline"><?php esc_html_e( 'TW Backup 365 - v1.5.1', 'tw-backup-365' ); ?></h1>
+			<h1 class="wp-heading-inline"><?php esc_html_e( 'TW Backup 365 - v1.5.2', 'tw-backup-365' ); ?></h1>
 			<hr class="wp-header-end">
 
 			<div class="card" style="max-width: 800px; margin-top: 20px; border-left: 4px solid #2271b1;">
@@ -111,10 +111,19 @@ class Tw_Backup_365 {
 					<?php wp_nonce_field( 'tw_backup_action', 'tw_backup_nonce' ); ?>
 					<input type="hidden" name="action" value="tw_backup_trigger">
 					
-					<?php if ( $is_cooldown ) : ?>
-						<button type="button" class="button button-secondary" disabled>
-							<?php printf( esc_html__( 'Wait %d min', 'tw-backup-365' ), ceil( ( $is_cooldown - time() ) / 60 ) ); ?>
-						</button>
+					<?php if ( $is_cooldown ) : 
+						$remaining = $is_cooldown - time();
+						if ( $remaining < 0 ) $remaining = 0;
+					?>
+						<input type="submit" 
+							   id="tw-cooldown-btn" 
+							   class="button button-secondary" 
+							   disabled 
+							   value="<?php echo esc_attr( sprintf( __( 'Please wait %s', 'tw-backup-365' ), gmdate( 'i:s', $remaining ) ) ); ?>"
+							   data-remaining="<?php echo esc_attr( $remaining ); ?>"
+							   data-ready-text="<?php esc_attr_e( 'Start Secure Backup', 'tw-backup-365' ); ?>"
+							   data-wait-text="<?php esc_attr_e( 'Please wait', 'tw-backup-365' ); ?>"
+						>
 					<?php else : ?>
 						<?php submit_button( __( 'Start Secure Backup', 'tw-backup-365' ), 'primary' ); ?>
 					<?php endif; ?>
@@ -146,7 +155,7 @@ class Tw_Backup_365 {
 									<td>
 										<strong>
 										<?php 
-										// v1.5.1 核心修正：使用 wp_date() 轉換時區
+										// v1.5.1 時區修正
 										echo esc_html( wp_date( 'Y-m-d H:i:s', strtotime( $group['date'] ) ) ); 
 										?>
 										</strong>
@@ -231,10 +240,13 @@ class Tw_Backup_365 {
 		?>
 		<script type="text/javascript">
 		jQuery(document).ready(function($) {
+			// 詳情展開
 			$('.toggle-details').on('click', function() {
 				var target = '#' + $(this).data('target');
 				$(target).toggle();
 			});
+
+			// 複製路徑
 			$('.copy-btn').on('click', function() {
 				var $temp = $("<input>");
 				$("body").append($temp);
@@ -246,6 +258,33 @@ class Tw_Backup_365 {
 				$btn.html('<span class="dashicons dashicons-yes"></span> Copied!');
 				setTimeout(function() { $btn.html(originalText); }, 2000);
 			});
+
+			// v1.5.2 核心更新：自動倒數與解鎖按鈕
+			var $cooldownBtn = $('#tw-cooldown-btn');
+			if ($cooldownBtn.length) {
+				var remaining = parseInt($cooldownBtn.data('remaining'));
+				var waitText = $cooldownBtn.data('wait-text');
+				var readyText = $cooldownBtn.data('ready-text');
+
+				var interval = setInterval(function() {
+					remaining--;
+					
+					if (remaining <= 0) {
+						clearInterval(interval);
+						// 時間到：解鎖按鈕，變色，改文字
+						$cooldownBtn.prop('disabled', false)
+									.removeClass('button-secondary')
+									.addClass('button-primary')
+									.val(readyText);
+					} else {
+						// 倒數中：更新文字 MM:SS
+						var minutes = Math.floor(remaining / 60);
+						var seconds = remaining % 60;
+						var formatted = (minutes < 10 ? "0" : "") + minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+						$cooldownBtn.val(waitText + ' ' + formatted);
+					}
+				}, 1000);
+			}
 		});
 		</script>
 		<style>
